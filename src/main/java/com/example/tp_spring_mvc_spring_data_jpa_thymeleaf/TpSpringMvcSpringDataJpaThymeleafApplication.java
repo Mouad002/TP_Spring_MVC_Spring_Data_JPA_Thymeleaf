@@ -20,14 +20,14 @@ public class TpSpringMvcSpringDataJpaThymeleafApplication implements CommandLine
 
 	@Override
 	public void run(String... args) throws Exception {
-		Patient p1 = new Patient(null, "mouad", new Date(), false, 45);
-		Patient p2 = Patient.builder()
-			.nom("chaima")
-			.dateNaissance(new Date())
-			.malade(true)
-			.score(12)
-			.build();
-		patientRepository.save(p1);
-		patientRepository.save(p2);
+//		Patient p1 = new Patient(null, "mouad", new Date(), false, 45);
+//		Patient p2 = Patient.builder()
+//			.nom("chaima")
+//			.dateNaissance(new Date())
+//			.malade(true)
+//			.score(12)
+//			.build();
+//		patientRepository.save(p1);
+//		patientRepository.save(p2);
 	}
 }

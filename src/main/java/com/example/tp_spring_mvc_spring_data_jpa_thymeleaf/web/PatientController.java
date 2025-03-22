@@ -2,12 +2,15 @@ package com.example.tp_spring_mvc_spring_data_jpa_thymeleaf.web;
 
 import com.example.tp_spring_mvc_spring_data_jpa_thymeleaf.entities.Patient;
 import com.example.tp_spring_mvc_spring_data_jpa_thymeleaf.repositories.PatientRepository;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -36,5 +39,40 @@ public class PatientController {
     public String delete(Model model, Long id, int page, String keyword) {
         patientRepository.deleteById(id);
         return "redirect:/index?page=" + page + "&keyword=" + keyword;
+    }
+
+    @GetMapping("/edit")
+    public String edit(Model model, Long id, String keyword, int page) {
+        Patient p = patientRepository.findById(id).orElse(null);
+        if(p==null) throw new RuntimeException("patient introuvable");
+        model.addAttribute("patient", p);
+        model.addAttribute("page", page);
+        model.addAttribute("keyword", keyword);
+        return "edit-patient";
+    }
+
+    @GetMapping("/formPatients")
+    public String formPatients(Model model) {
+        model.addAttribute("patient",new Patient());
+        return "form-patients";
+    }
+
+    @PostMapping(path = "/save")
+    public String save(Model model, @Valid Patient patient, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) return "form-patients";
+        patientRepository.save(patient);
+        return "redirect:/formPatients";
+    }
+
+    @PostMapping(path = "/editPatient")
+    public String editPatient(Model model,
+                              @Valid Patient patient,
+                              BindingResult bindingResult,
+                              @RequestParam(defaultValue = "0") int page,
+                              @RequestParam(defaultValue = "") String keyword) {
+        System.out.println(patient);
+        if(bindingResult.hasErrors()) return "form-patients";
+        patientRepository.save(patient);
+        return "redirect:/index?page="+page+"&keyword="+keyword;
     }
 }
