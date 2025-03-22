@@ -5,7 +5,6 @@ import com.example.tp_spring_mvc_spring_data_jpa_thymeleaf.repositories.PatientR
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
