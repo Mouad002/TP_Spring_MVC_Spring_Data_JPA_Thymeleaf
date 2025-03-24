@@ -21,7 +21,7 @@ public class PatientController {
     public PatientController(PatientRepository patientRepository) {
         this.patientRepository = patientRepository;
     }
-    @GetMapping("/index")
+    @GetMapping("/user/index")
     public String index(Model model,
                         @RequestParam(value = "page", defaultValue = "0") int page,
                         @RequestParam(value = "size", defaultValue = "5") int size,
@@ -34,13 +34,13 @@ public class PatientController {
         return "patients";
     }
 
-    @GetMapping("/delete")
+    @GetMapping("/admin/delete")
     public String delete(Model model, Long id, int page, String keyword) {
         patientRepository.deleteById(id);
-        return "redirect:/index?page=" + page + "&keyword=" + keyword;
+        return "redirect:/user/index?page=" + page + "&keyword=" + keyword;
     }
 
-    @GetMapping("/edit")
+    @GetMapping("/admin/edit")
     public String edit(Model model, Long id, String keyword, int page) {
         Patient p = patientRepository.findById(id).orElse(null);
         if(p==null) throw new RuntimeException("patient introuvable");
@@ -50,20 +50,20 @@ public class PatientController {
         return "edit-patient";
     }
 
-    @GetMapping("/formPatients")
+    @GetMapping("/admin/formPatients")
     public String formPatients(Model model) {
         model.addAttribute("patient",new Patient());
         return "form-patients";
     }
 
-    @PostMapping(path = "/save")
+    @PostMapping(path = "/admin/save")
     public String save(Model model, @Valid Patient patient, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) return "form-patients";
         patientRepository.save(patient);
-        return "redirect:/formPatients";
+        return "redirect:/admin/formPatients";
     }
 
-    @PostMapping(path = "/editPatient")
+    @PostMapping(path = "/admin/editPatient")
     public String editPatient(Model model,
                               @Valid Patient patient,
                               BindingResult bindingResult,
@@ -72,11 +72,11 @@ public class PatientController {
         System.out.println(patient);
         if(bindingResult.hasErrors()) return "form-patients";
         patientRepository.save(patient);
-        return "redirect:/index?page="+page+"&keyword="+keyword;
+        return "redirect:/user/index?page="+page+"&keyword="+keyword;
     }
 
     @GetMapping("/")
     public String home() {
-        return "redirect:/index";
+        return "redirect:/user/index";
     }
 }
