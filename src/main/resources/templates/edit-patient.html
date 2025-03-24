@@ -11,7 +11,7 @@
 <body>
 <div layout:fragment="content1">
     <div class="col-md-6 offset-3">
-        <form method="post" th:action="@{editPatient(page=${page},keyword=${keyword})}">
+        <form method="post" th:action="@{/user/editPatient(page=${page},keyword=${keyword})}">
             <div>
                 <label>Id : </label>
                 <label th:text="${patient.id}"></label>

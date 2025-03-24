@@ -11,7 +11,7 @@
 <body>
   <div layout:fragment="content1">
     <div class="col-md-6 offset-3">
-      <form method="post" th:action="@{editPatient}">
+      <form method="post" th:action="@{/user/editPatient}">
         <div>
           <label>Nom</label>
           <input class="form-control" type="text" name="nom" th:value="${patient.nom}">
