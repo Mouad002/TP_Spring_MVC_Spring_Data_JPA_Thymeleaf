@@ -27,6 +27,8 @@ public class TpSpringMvcSpringDataJpaThymeleafApplication implements CommandLine
 //			.malade(true)
 //			.score(12)
 //			.build();
+
+
 //		patientRepository.save(p1);
 //		patientRepository.save(p2);
 	}
