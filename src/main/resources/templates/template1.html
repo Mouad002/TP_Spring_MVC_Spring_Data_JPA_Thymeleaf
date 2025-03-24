@@ -45,11 +45,16 @@
         <ul class="navbar-nav">
           <!-- Dropdown Menu -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-              [UserName]
-            </a>
+            <a th:text="${#authentication.name}" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"></a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" th:href="@{/formPatients}">Logout</a></li>
+              <li>
+                <form method="post" th:action="@{/logout}">
+                  <button class="dropdown-item" type="submit">Logout</button>
+                </form>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Profile</a>
+              </li>
             </ul>
           </li>
         </ul>
