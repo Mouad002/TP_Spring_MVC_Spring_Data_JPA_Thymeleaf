@@ -31,7 +31,7 @@
                             <th>date naissance</th>
                             <th>malade</th>
                             <th>score</th>
-                            <th>actions</th>
+                            <th th:if="${#authorization.expression('hasRole(''ADMIN'')')}">actions</th>
                         </tr>
                         <tr th:each="patient : ${patients}">
                             <td th:text="${patient.id}"></td>
@@ -39,7 +39,7 @@
                             <td th:text="${patient.dateNaissance}"></td>
                             <td th:text="${patient.malade}"></td>
                             <td th:text="${patient.score}"></td>
-                            <td>
+                            <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
                                 <a onclick="javascript:return confirm('are you sure you want to delete it?')" th:href="@{/admin/delete(id=${patient.id}, page=${currentPage}, keyword=${keyword})}" class="btn btn-danger">
                                     <i class="bi bi-trash"></i>
                                 </a>

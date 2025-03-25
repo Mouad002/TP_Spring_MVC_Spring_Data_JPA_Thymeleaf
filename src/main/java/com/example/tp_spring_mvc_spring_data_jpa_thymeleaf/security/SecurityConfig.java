@@ -24,7 +24,8 @@ public class SecurityConfig {
         return httpSecurity.formLogin(Customizer.withDefaults())
                 .authorizeHttpRequests(ar -> ar.requestMatchers("/admin/**").hasRole("ADMIN"))
                 .authorizeHttpRequests(ar -> ar.requestMatchers("/user/**").hasRole("USER"))
-                .authorizeHttpRequests(ar -> ar.anyRequest().authenticated())
+                .exceptionHandling(ar -> ar.accessDeniedPage("/notAuthorized"))
+                .authorizeHttpRequests(ar->ar.anyRequest().authenticated())
                 .build();
     }
 
