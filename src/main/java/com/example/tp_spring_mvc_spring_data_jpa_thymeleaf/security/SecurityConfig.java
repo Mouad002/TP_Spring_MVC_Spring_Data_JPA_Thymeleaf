@@ -21,11 +21,18 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
-        return httpSecurity.formLogin(Customizer.withDefaults())
-                .authorizeHttpRequests(ar -> ar.requestMatchers("/admin/**").hasRole("ADMIN"))
-                .authorizeHttpRequests(ar -> ar.requestMatchers("/user/**").hasRole("USER"))
+        return httpSecurity
+                .formLogin(ar -> ar.loginPage("/login").permitAll())
+                .rememberMe(rm -> rm.key("remember-me-key") // Enables remember-me feature
+                        .tokenValiditySeconds(86400) // Token valid for 1 day (optional)
+                )
                 .exceptionHandling(ar -> ar.accessDeniedPage("/notAuthorized"))
-                .authorizeHttpRequests(ar->ar.anyRequest().authenticated())
+                .authorizeHttpRequests(ar -> ar
+                        .requestMatchers("/webjars/**", "/css/**", "/js/**", "/h2-console/**").permitAll()
+//                        .requestMatchers("/user/**").hasRole("USER")
+//                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
+                )
                 .build();
     }
 

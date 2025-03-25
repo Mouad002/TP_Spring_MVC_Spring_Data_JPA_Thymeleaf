@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css"/>
+    <title>login</title>
+</head>
+<body>
+    <div class="row mt-3">
+        <div class="col-md-6 offset-3">
+            <div class="card">
+                <div class="card-header">
+                    Authentication
+                </div>
+                <div class="card-body">
+                    <form method="post" th:action="@{/login}">
+                        <div class="mb-3 mt-3">
+                            <label for="username">Username</label>
+                            <input class="form-control" type="text" id="username" name="username">
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <label for="password">Password</label>
+                            <input class="form-control" type="text" id="password" name="password">
+                        </div>
+                        <div class="form-check mb-3">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" name="remember-me"> Remember me
+                            </label>
+                        </div>
+                        <button class="btn btn-primary" type="submit">login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

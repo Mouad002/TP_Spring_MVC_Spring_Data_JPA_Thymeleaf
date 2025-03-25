@@ -5,6 +5,7 @@ import com.example.tp_spring_mvc_spring_data_jpa_thymeleaf.repositories.PatientR
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,7 @@ public class PatientController {
     public PatientController(PatientRepository patientRepository) {
         this.patientRepository = patientRepository;
     }
+
     @GetMapping("/user/index")
     public String index(Model model,
                         @RequestParam(value = "page", defaultValue = "0") int page,
@@ -34,12 +36,14 @@ public class PatientController {
         return "patients";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/admin/delete")
     public String delete(Model model, Long id, int page, String keyword) {
         patientRepository.deleteById(id);
         return "redirect:/user/index?page=" + page + "&keyword=" + keyword;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/admin/edit")
     public String edit(Model model, Long id, String keyword, int page) {
         Patient p = patientRepository.findById(id).orElse(null);
@@ -50,12 +54,14 @@ public class PatientController {
         return "edit-patient";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/admin/formPatients")
     public String formPatients(Model model) {
         model.addAttribute("patient",new Patient());
         return "form-patients";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(path = "/admin/save")
     public String save(Model model, @Valid Patient patient, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) return "form-patients";
@@ -63,6 +69,7 @@ public class PatientController {
         return "redirect:/admin/formPatients";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(path = "/admin/editPatient")
     public String editPatient(Model model,
                               @Valid Patient patient,
